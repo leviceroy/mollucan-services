@@ -269,6 +269,26 @@
   form input:focus,form select:focus,form textarea:focus{outline:none;border-color:var(--accent)}
   form textarea{resize:vertical;min-height:140px}
   form button{margin-top:8px;cursor:pointer;font:inherit;font-size:15px}
+  form button:disabled{opacity:.6;cursor:wait}
+  .form-status{margin-top:10px;font-size:14px;min-height:1em}
+  .form-status.error{color:#ef6b6b}
+  .form-success{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:48px 32px;
+    text-align:center;
+    animation:fadeIn .35s ease;
+  }
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .form-success .success-ico{
+    width:64px;height:64px;border-radius:50%;
+    background:rgba(126,201,143,.15);color:var(--ok);
+    display:flex;align-items:center;justify-content:center;
+    font-size:32px;font-weight:700;margin:0 auto 18px;
+  }
+  .form-success h3{font-family:'Playfair Display',serif;font-size:26px;margin-bottom:10px}
+  .form-success p{font-size:15px;margin-bottom:24px}
 
   @media (max-width:900px){
     .contact-cards{grid-template-columns:repeat(2,1fr);margin-bottom:-60px}
@@ -554,13 +574,12 @@
     <div class="container">
       <div class="contact-bottom-grid">
 
-        <form action="https://formsubmit.co/mollucanstaycation@gmail.com" method="POST">
-          <!-- Formsubmit.co — free form relay, no signup required -->
+        <form id="contactForm" action="https://formsubmit.co/ajax/mollucanstaycation@gmail.com" method="POST">
+          <!-- Formsubmit AJAX endpoint — no redirect, no captcha page -->
           <input type="hidden" name="_cc" value="lyndorio@yahoo.com" />
           <input type="hidden" name="_subject" value="New enquiry — Mollucan Information Services" />
           <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="true" />
-          <input type="hidden" name="_autoresponse" value="Thank you for contacting Mollucan Information Services. We have received your enquiry and will get back to you shortly." />
+          <input type="hidden" name="_captcha" value="false" />
           <!-- Honeypot field: hidden from humans, bots fill it -->
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
 
@@ -584,8 +603,18 @@
           <label for="cmsg">Message</label>
           <textarea id="cmsg" name="message" placeholder="Briefly describe what you need handled…" required></textarea>
 
-          <button type="submit" class="btn">Submit</button>
+          <button type="submit" class="btn" id="contactSubmit">Submit</button>
+
+          <p class="form-status" id="formStatus" aria-live="polite"></p>
         </form>
+
+        <!-- Inline success state, hidden until submit succeeds -->
+        <div id="contactSuccess" class="form-success" hidden>
+          <div class="success-ico">✓</div>
+          <h3>Message sent.</h3>
+          <p>Thank you for contacting Mollucan Information Services. We'll be in touch shortly with the next steps.</p>
+          <button type="button" class="btn ghost" onclick="resetContactForm()">Send another</button>
+        </div>
 
         <div class="contact-copy">
           <span class="eyebrow">Talk To Us</span>
@@ -632,6 +661,63 @@
   </div>
   <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 </footer>
+
+<script>
+  // AJAX contact form — no page redirect, inline success state
+  (function(){
+    var form = document.getElementById('contactForm');
+    var status = document.getElementById('formStatus');
+    var success = document.getElementById('contactSuccess');
+    var submitBtn = document.getElementById('contactSubmit');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      status.textContent = '';
+      status.classList.remove('error');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      var data = {};
+      new FormData(form).forEach(function(v,k){ data[k] = v; });
+
+      fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept':'application/json', 'Content-Type':'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, body:j}; }); })
+      .then(function(res){
+        if (res.ok && res.body && (res.body.success === 'true' || res.body.success === true)) {
+          form.hidden = true;
+          success.hidden = false;
+          success.scrollIntoView({behavior:'smooth', block:'center'});
+        } else {
+          throw new Error((res.body && res.body.message) || 'Submission failed');
+        }
+      })
+      .catch(function(err){
+        status.textContent = 'Sorry — could not send your message. Please try again or email mollucanstaycation@gmail.com directly.';
+        status.classList.add('error');
+        console.error(err);
+      })
+      .finally(function(){
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
+      });
+    });
+  })();
+
+  function resetContactForm(){
+    var form = document.getElementById('contactForm');
+    var success = document.getElementById('contactSuccess');
+    form.reset();
+    form.hidden = false;
+    success.hidden = true;
+    document.getElementById('formStatus').textContent = '';
+    form.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+</script>
 
 </body>
 </html>
