@@ -282,6 +282,7 @@
     animation:fadeIn .35s ease;
   }
   @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .form-success.fade-out{opacity:0;transform:translateY(-6px);transition:opacity .4s ease, transform .4s ease}
   .form-success .success-ico{
     width:42px;height:42px;flex:0 0 42px;border-radius:50%;
     background:rgba(126,201,143,.18);color:var(--ok);
@@ -554,7 +555,7 @@
             <svg viewBox="0 0 24 24"><rect x="6" y="11" width="12" height="9" rx="1"/><path d="M9 11V8a3 3 0 0 1 6 0v3"/><circle cx="9.5" cy="15.5" r=".8" fill="currentColor"/><circle cx="12" cy="15.5" r=".8" fill="currentColor"/><circle cx="14.5" cy="15.5" r=".8" fill="currentColor"/></svg>
           </div>
           <h4>Working Hours</h4>
-          <p>Monday – Saturday<br/>8:00 AM – 6:00 PM</p>
+          <p>Monday – Sunday<br/>8:00 AM – 9:00 PM</p>
         </div>
 
         <div class="contact-card">
@@ -687,7 +688,14 @@
         if (res.ok && res.body && (res.body.success === 'true' || res.body.success === true)) {
           form.reset();                              // clear all fields
           success.hidden = false;                    // reveal the banner
+          success.classList.remove('fade-out');
           success.scrollIntoView({behavior:'smooth', block:'center'});
+          // Auto-dismiss after 6s with a smooth fade
+          clearTimeout(window.__successTimer);
+          window.__successTimer = setTimeout(function(){
+            success.classList.add('fade-out');
+            setTimeout(function(){ success.hidden = true; success.classList.remove('fade-out'); }, 400);
+          }, 6000);
         } else {
           throw new Error((res.body && res.body.message) || 'Submission failed');
         }
