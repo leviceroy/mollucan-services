@@ -313,6 +313,29 @@
   .foot-links{display:flex;gap:24px}
   .foot-links a{font-size:13px;color:var(--muted);transition:.2s}
   .foot-links a:hover{color:var(--accent)}
+
+  /* Scroll reveal animations */
+  .reveal{
+    opacity:0;
+    transform:translateY(32px);
+    transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+    will-change:opacity, transform;
+  }
+  .reveal.from-left{transform:translateX(-40px)}
+  .reveal.from-right{transform:translateX(40px)}
+  .reveal.is-visible{opacity:1;transform:none}
+
+  /* Stagger children in grids */
+  .reveal-stagger > .reveal{transition-delay:0s}
+  .reveal-stagger > .reveal:nth-child(2){transition-delay:.10s}
+  .reveal-stagger > .reveal:nth-child(3){transition-delay:.20s}
+  .reveal-stagger > .reveal:nth-child(4){transition-delay:.30s}
+  .reveal-stagger > .reveal:nth-child(5){transition-delay:.40s}
+  .reveal-stagger > .reveal:nth-child(6){transition-delay:.50s}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1 !important;transform:none !important;transition:none !important}
+  }
 </style>
 </head>
 <body>
@@ -337,7 +360,7 @@
 <!-- HERO -->
 <header class="hero" id="top">
   <div class="container hero-grid">
-    <div>
+    <div class="reveal from-left">
       <span class="eyebrow">Documentation · Permits · Surveying</span>
       <h1>Paperwork made <em>simple,</em> permits made <em>fast.</em></h1>
       <p class="lead">Mollucan Information Services helps individuals and businesses navigate documentation, surveying, permits, passporting, and vehicle transfers — handled end to end, with care and precision, so you can focus on what matters.</p>
@@ -346,7 +369,7 @@
         <a href="#contact" class="btn ghost">Talk To Us →</a>
       </div>
     </div>
-    <aside class="hero-card">
+    <aside class="hero-card reveal from-right">
       <div class="row">
         <div class="ico">01</div>
         <div><h4>Documentation Assistance</h4><small>Titles, deeds, affidavits, leases</small></div>
@@ -374,10 +397,10 @@
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="container about-grid">
-    <div class="about-img">
+    <div class="about-img reveal from-left">
       <img src="assets/Mollucan.png" alt="Mollucan Information Services" />
     </div>
-    <div>
+    <div class="reveal from-right">
       <span class="eyebrow">About Us</span>
       <h2>We assist. We document. We deliver.</h2>
       <p>Mollucan Information Services is a one-stop assistance partner for the documents, permits, and approvals that keep daily life and small businesses moving. Whether you need a title transferred, a building permit secured, a passport extended, or a vehicle re-registered — we handle the queues, the forms, and the follow-ups so you don't have to.</p>
@@ -394,16 +417,16 @@
 <!-- SERVICES -->
 <section id="services">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">What We Offer</span>
       <h2>A complete suite of assistance services</h2>
       <p>From legal paperwork and land surveying to permits, passports, and vehicle transfers — every service is delivered with attention, accuracy, and accountability.</p>
     </div>
 
-    <div class="services-grid">
+    <div class="services-grid reveal-stagger">
 
       <!-- 1. Documentation -->
-      <div class="service">
+      <div class="service reveal">
         <span class="num">01 — DOCUMENTATION</span>
         <h3>Documentation Assistance</h3>
         <p class="sub">We assist and offer documentation for legal, real estate, and personal matters — drafted, processed, and filed correctly the first time.</p>
@@ -423,7 +446,7 @@
       </div>
 
       <!-- 2. Surveying -->
-      <div class="service">
+      <div class="service reveal">
         <span class="num">02 — SURVEYING</span>
         <h3>Surveying Services</h3>
         <p class="sub">From relocation to subdivision and consultation, our surveying services cover the full spectrum of real-estate and construction needs.</p>
@@ -440,7 +463,7 @@
       </div>
 
       <!-- 3. Permits and Paperworks (wide) -->
-      <div class="service wide">
+      <div class="service wide reveal">
         <span class="num">03 — PERMITS &amp; PAPERWORKS</span>
         <h3>Permits and Paperworks</h3>
         <p class="sub">Setting up a business or building a structure? We secure the permits and government registrations so you can stay compliant and focused on operations.</p>
@@ -457,7 +480,7 @@
       </div>
 
       <!-- 4. Passporting -->
-      <div class="service">
+      <div class="service reveal">
         <span class="num">04 — PASSPORTING</span>
         <h3>Passporting Services</h3>
         <p class="sub">Travel and civil documents handled with care — for clients who need certificates, visa extensions, or processing assistance.</p>
@@ -472,7 +495,7 @@
       </div>
 
       <!-- 5. Cars Renewal & Transfer -->
-      <div class="service">
+      <div class="service reveal">
         <span class="num">05 — VEHICLES</span>
         <h3>Cars Renewal &amp; Transfer</h3>
         <p class="sub">Renewal, transfer, and registration assistance for every type of vehicle — including van for hire transactions.</p>
@@ -490,23 +513,23 @@
 <!-- WHY US -->
 <section class="why" id="why">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">Why Choose Us</span>
       <h2>Trusted help, end to end</h2>
       <p>We treat each case like our own — clear communication, careful paperwork, and an honest timeline.</p>
     </div>
-    <div class="why-grid">
-      <div class="why-card">
+    <div class="why-grid reveal-stagger">
+      <div class="why-card reveal">
         <div class="ico">✓</div>
         <h4>One Point of Contact</h4>
         <p>From the first message to the final stamp, you deal with one team that knows your file inside out — no hand-offs, no surprises.</p>
       </div>
-      <div class="why-card">
+      <div class="why-card reveal">
         <div class="ico">✓</div>
         <h4>Local Knowledge</h4>
         <p>We know which office handles what, which forms are current, and how to keep your transaction moving without unnecessary delays.</p>
       </div>
-      <div class="why-card">
+      <div class="why-card reveal">
         <div class="ico">✓</div>
         <h4>Honest Timelines</h4>
         <p>We tell you upfront what's realistic, what's required, and what it will cost — no padded promises, no hidden fees.</p>
@@ -517,7 +540,7 @@
 
 <!-- CTA STRIP -->
 <section class="cta-strip" style="padding:80px 0">
-  <div class="container">
+  <div class="container reveal">
     <span class="eyebrow">Ready when you are</span>
     <h2>Let's get your paperwork moving.</h2>
     <p>Tell us what you need handled. We'll come back with a clear plan, a clear price, and a realistic timeline.</p>
@@ -531,9 +554,9 @@
   <!-- Top band: 4 icon cards -->
   <div class="contact-top-band">
     <div class="container">
-      <div class="contact-cards">
+      <div class="contact-cards reveal-stagger">
 
-        <div class="contact-card">
+        <div class="contact-card reveal">
           <div class="ico">
             <!-- location pin -->
             <svg viewBox="0 0 24 24"><path d="M12 21s-7-7.5-7-12a7 7 0 1 1 14 0c0 4.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
@@ -542,7 +565,7 @@
           <p>V. Gador St. Pob East,<br/>Moalboal, Cebu</p>
         </div>
 
-        <div class="contact-card">
+        <div class="contact-card reveal">
           <div class="ico">
             <!-- phone handset -->
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -551,7 +574,7 @@
           <p>+63 968 356 4718<br/>+63 962 149 0696</p>
         </div>
 
-        <div class="contact-card">
+        <div class="contact-card reveal">
           <div class="ico">
             <!-- old phone / fax -->
             <svg viewBox="0 0 24 24"><rect x="6" y="11" width="12" height="9" rx="1"/><path d="M9 11V8a3 3 0 0 1 6 0v3"/><circle cx="9.5" cy="15.5" r=".8" fill="currentColor"/><circle cx="12" cy="15.5" r=".8" fill="currentColor"/><circle cx="14.5" cy="15.5" r=".8" fill="currentColor"/></svg>
@@ -560,7 +583,7 @@
           <p>Monday – Sunday<br/>8:00 AM – 9:00 PM</p>
         </div>
 
-        <div class="contact-card">
+        <div class="contact-card reveal">
           <div class="ico">
             <!-- envelope -->
             <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
@@ -578,7 +601,7 @@
     <div class="container">
       <div class="contact-bottom-grid">
 
-        <form id="contactForm" action="https://formsubmit.co/ajax/mollucanstaycation@gmail.com" method="POST">
+        <form id="contactForm" class="reveal from-left" action="https://formsubmit.co/ajax/mollucanstaycation@gmail.com" method="POST">
           <!-- Formsubmit AJAX endpoint — no redirect, no captcha page -->
           <input type="hidden" name="_cc" value="lyndorio@yahoo.com" />
           <input type="hidden" name="_subject" value="New enquiry — Mollucan Information Services" />
@@ -612,7 +635,7 @@
           <p class="form-status" id="formStatus" aria-live="polite"></p>
         </form>
 
-        <div class="contact-copy">
+        <div class="contact-copy reveal from-right">
           <!-- Slim success banner — appears above Get in touch after a successful submit -->
           <div id="contactSuccess" class="form-success" hidden>
             <div class="success-ico">✓</div>
@@ -662,6 +685,24 @@
 </footer>
 
 <script>
+  // Scroll reveal — fade + slide elements into view once
+  (function(){
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+
   // AJAX contact form — no page redirect, inline success state
   (function(){
     var form = document.getElementById('contactForm');
