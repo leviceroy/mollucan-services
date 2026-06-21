@@ -554,7 +554,16 @@
     <div class="container">
       <div class="contact-bottom-grid">
 
-        <form onsubmit="event.preventDefault(); alert('Thank you. We will get back to you shortly.'); this.reset();">
+        <form action="https://formsubmit.co/mollucanstaycation@gmail.com" method="POST">
+          <!-- Formsubmit.co — free form relay, no signup required -->
+          <input type="hidden" name="_cc" value="lyndorio@yahoo.com" />
+          <input type="hidden" name="_subject" value="New enquiry — Mollucan Information Services" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="true" />
+          <input type="hidden" name="_autoresponse" value="Thank you for contacting Mollucan Information Services. We have received your enquiry and will get back to you shortly." />
+          <!-- Honeypot field: hidden from humans, bots fill it -->
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
           <label for="cname">Your Name</label>
           <input id="cname" name="name" type="text" placeholder="Juan Dela Cruz" required />
 
