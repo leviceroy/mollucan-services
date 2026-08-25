@@ -316,9 +316,11 @@
     text-align:center;margin-top:32px;
     color:var(--muted);font-size:13.5px;
   }
-  @media (max-width:820px){.testimonials-grid{grid-template-columns:1fr}}
+  .testimonials-grid.two{grid-template-columns:repeat(2,1fr);max-width:820px;margin-left:auto;margin-right:auto}
+  @media (max-width:820px){.testimonials-grid,.testimonials-grid.two{grid-template-columns:1fr}}
 
   /* WHY */
+  .why{background:var(--bg-2)}
   .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
   .why-card{
     background:var(--panel);border:1px solid var(--line);
@@ -715,7 +717,35 @@
   </div>
 </section>
 
-<!-- Testimonials section removed for now. Restore from git history (commit a2c1e70 or earlier) once real client quotes are available. -->
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">What Clients Say</span>
+      <h2>Trusted by neighbours and newcomers alike</h2>
+      <p>Real stories from real clients across Moalboal and Cebu.</p>
+    </div>
+
+    <div class="testimonials-grid two reveal-stagger">
+      <div class="quote reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>“Helen was very helpful and affordable.”</blockquote>
+        <div class="who">
+          <div class="avatar">JT</div>
+          <div><h5>Jeelyn Teichen</h5><small>Permits &amp; paperwork · Moalboal</small></div>
+        </div>
+      </div>
+      <div class="quote reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>“Helen organized everything swiftly. She organized all the paper work and approvals for the land, built our wall and gate to our liking and is organizing now the building permit. No hassle, everything swiftly. Great service.”</blockquote>
+        <div class="who">
+          <div class="avatar">CW</div>
+          <div><h5>Chris Wenk</h5><small>Land purchase &amp; building permit · Moalboal</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- WHY US -->
 <section class="why" id="why">
